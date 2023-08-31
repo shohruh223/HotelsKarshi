@@ -1,0 +1,144 @@
+{% extends 'app/main/base.html' %}
+{% load static %}
+
+{% block title %} WebEnter. {% endblock title %}
+
+
+{% block content %}
+
+
+    <section class="ftco-section ftco-degree-bg">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 ftco-animate order-md-last">
+                    <h2 class="mb-3">{{ blog.title }}</h2>
+                    <p>
+                        <img src="{{ blog.image.url }}" alt="" class="img-fluid">
+                    </p>
+                    <p>{{ blog.text }}</p>
+                    <div class="tag-widget post-tag-container mb-5 mt-5">
+                        <div class="tagcloud">
+                            <a href="#" class="tag-cloud-link">Life</a>
+                            <a href="#" class="tag-cloud-link">Sport</a>
+                            <a href="#" class="tag-cloud-link">Tech</a>
+                            <a href="#" class="tag-cloud-link">Travel</a>
+                        </div>
+                    </div>
+                    {% for comment in comment_one %}
+                    <div class="about-author d-flex p-4 bg-light">
+                        <div class="bio align-self-md-center mr-4">
+                            <img src="{% static 'app/images/user_2.jpeg' %}" alt="Image placeholder" class="img-fluid mb-4">
+                        </div>
+                        <div class="desc align-self-md-center">
+                            <h3 style="font-family: sans-serif">{{ comment.user }}</h3>
+                            <p>{{ comment.text }}</p>
+                        </div>
+                    </div>
+
+                        {% endfor %}
+                    <div class="pt-5 mt-5">
+                        <h3 class="mb-5" style="font-family: sans-serif">{{ comments.count }} Comments</h3>
+                        {% for comment in comments %}
+                            <ul class="comment-list">
+                                <li class="comment">
+                                    <div class="vcard bio">
+                                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/59/User-avatar.svg/2048px-User-avatar.svg.png"
+                                             alt="Image placeholder">
+                                    </div>
+                                    <div class="comment-body">
+                                        <h3 style="font-family: sans-serif">{{ comment.user }}</h3>
+{#                                        <div class="meta"></div>#}
+                                        <p>{{ comment.text }}</p>
+                                        <p><a href="#" class="reply">Reply</a></p>
+                                    </div>
+                                </li>
+                            </ul>
+                        {% endfor %}
+                        <!-- END comment-list -->
+
+                        <div class="comment-form-wrap pt-5">
+                            <h3 class="mb-5">Leave a comment</h3>
+                            <form action="{% url "new-comment" blog.id %}" method="post" class="p-5 bg-light">
+                                {% csrf_token %}
+
+
+                                <div class="form-group">
+                                    <label for="message">Message</label>
+                                    <textarea name="text" id="message" cols="30" rows="10"
+                                              class="form-control"></textarea>
+                                </div>
+                                <div class="form-group">
+
+                                    <input type="submit" value="Post Comment" class="btn py-3 px-4 btn-primary">
+
+
+                                </div>
+
+                            </form>
+                        </div>
+                    </div>
+
+                </div> <!-- .col-md-8 -->
+                <div class="col-lg-4 sidebar ftco-animate">
+                    <div class="sidebar-box">
+
+                    </div>
+                    <div class="sidebar-box ftco-animate">
+                        <div class="categories">
+                            <h3>Categories</h3>
+                            <li><a href="#">Properties <span>(12)</span></a></li>
+                            <li><a href="#">Home <span>(22)</span></a></li>
+                            <li><a href="#">House <span>(37)</span></a></li>
+                            <li><a href="#">Villa <span>(42)</span></a></li>
+                            <li><a href="#">Apartment <span>(14)</span></a></li>
+                            <li><a href="#">Condominium <span>(140)</span></a></li>
+                        </div>
+                    </div>
+
+                    <div class="sidebar-box ftco-animate">
+                        <h3>Recent Blog</h3>
+                        {% for blog in blogs %}
+                            <div class="block-21 mb-4 d-flex">
+                                <a class="blog-img mr-4" style="background-image: url({{ blog.image.url }});"></a>
+                                <div class="text">
+                                    <h3 class="heading"><a href="{% url "blog-detail" blog.id %}">{{ blog.title }}</a>
+                                    </h3>
+                                    <div class="meta">
+                                        <div><a href="#"><span class="icon-calendar"></span>{{ blog.created_at }}</a>
+                                        </div>
+                                        <div><a href="#"><span class="icon-person"></span> Admin</a></div>
+                                        <div><a href="#"><span class="icon-chat"></span> 19</a></div>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+
+                    <div class="sidebar-box ftco-animate">
+                        <h3>Tag Cloud</h3>
+                        <div class="tagcloud">
+                            <a href="#" class="tag-cloud-link">dish</a>
+                            <a href="#" class="tag-cloud-link">menu</a>
+                            <a href="#" class="tag-cloud-link">food</a>
+                            <a href="#" class="tag-cloud-link">sweet</a>
+                            <a href="#" class="tag-cloud-link">tasty</a>
+                            <a href="#" class="tag-cloud-link">delicious</a>
+                            <a href="#" class="tag-cloud-link">desserts</a>
+                            <a href="#" class="tag-cloud-link">drinks</a>
+                        </div>
+                    </div>
+
+                    <div class="sidebar-box ftco-animate">
+                        <h3>Paragraph</h3>
+                        <p>Qarshi shahridagi mehmonxonalar o'zining hashamati va xizmat ko'rsatish
+                            sifati juda yaxshiligi bilan ajralib turadi ! Bizning mehmonxonalar
+                            barcha jahon standartlariga javob beuvchi mehmonxonalardir !</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section> <!-- .section -->
+
+
+{% endblock content %}

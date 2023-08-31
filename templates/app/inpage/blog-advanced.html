@@ -1,0 +1,33 @@
+{% load static %}
+<section class="ftco-section">
+    <div class="container">
+        <div class="row d-flex">
+            {% for blog in blogs_list %}
+                {% include 'app/inpage/blog-single.html' %}
+            {% endfor %}
+        </div>
+        <div class="row mt-5">
+            <div class="col text-center">
+                <div class="block-27">
+                    <ul>
+                        {% if blogs_list.has_previous %}
+                            <li><a href="?page={{ blogs_list.previous_page_number }}">&lt;</a></li>
+                        {% endif %}
+
+                        {% for i in blogs_list.paginator.page_range %}
+                            {% if blogs_list.number == i %}
+                                <li class="active"><span>{{ i }}</span></li>
+                            {% else %}
+                                <li><a href="?page={{ i }}"><span>{{ i }}</span></a></li>
+                            {% endif %}
+                        {% endfor %}
+
+                        {% if blogs_list.has_next %}
+                            <li><a href="?page={{ blogs_list.next_page_number }}">&gt;</a></li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
